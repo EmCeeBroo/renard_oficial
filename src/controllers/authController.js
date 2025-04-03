@@ -1,6 +1,6 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const userModel = require('../app/models/userModel.js'); // Asegúrate de tener o crear este modelo
+const userModel = require('../models/userModel.js'); // Asegúrate de tener o crear este modelo
 const bcrypt = require('../library/appBcrypt.js'); // Tu librería para encriptación
 
 exports.login = async (req, res) => {
