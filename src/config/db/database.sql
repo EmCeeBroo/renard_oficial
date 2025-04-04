@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-04-2025 a las 01:46:53
+-- Tiempo de generación: 04-04-2025 a las 16:59:58
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,6 +20,22 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `renard_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `api_users`
+--
+
+CREATE TABLE `api_users` (
+  `Api_user_id` int(11) NOT NULL,
+  `Api_user` varchar(60) NOT NULL,
+  `Api_password` varchar(255) NOT NULL,
+  `Api_role` enum('Admin','Read-only') NOT NULL,
+  `Api_status` enum('Active','Inactive') NOT NULL,
+  `Created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -308,6 +324,13 @@ CREATE TABLE `zona` (
 --
 
 --
+-- Indices de la tabla `api_users`
+--
+ALTER TABLE `api_users`
+  ADD PRIMARY KEY (`Api_user_id`),
+  ADD UNIQUE KEY `Api_user` (`Api_user`);
+
+--
 -- Indices de la tabla `categoria_menu`
 --
 ALTER TABLE `categoria_menu`
@@ -473,6 +496,12 @@ ALTER TABLE `zona`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `api_users`
+--
+ALTER TABLE `api_users`
+  MODIFY `Api_user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria_menu`
