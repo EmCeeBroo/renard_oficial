@@ -27,12 +27,12 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `api_users`
 --
 
-CREATE TABLE `api_users` (
-  `Api_user_id` int(11) NOT NULL,
-  `Api_user` varchar(60) NOT NULL,
-  `Api_password` varchar(255) NOT NULL,
-  `Api_role` enum('Admin','Read-only') NOT NULL,
-  `Api_status` enum('Active','Inactive') NOT NULL,
+CREATE TABLE `usuarios_api` (
+  `usuario_api_id` int(11) NOT NULL,
+  `usuario_api` varchar(60) NOT NULL,
+  `contraseña_api` varchar(255) NOT NULL,
+  `rol_api` enum('Admin','Read-only') NOT NULL,
+  `estado_api` enum('Active','Inactive') NOT NULL,
   `Created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `Updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
