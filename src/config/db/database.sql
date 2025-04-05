@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2025 a las 16:59:58
+-- Tiempo de generación: 05-04-2025 a las 21:05:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -20,22 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `renard_db`
 --
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `api_users`
---
-
-CREATE TABLE `usuarios_api` (
-  `usuario_api_id` int(11) NOT NULL,
-  `usuario_api` varchar(60) NOT NULL,
-  `contraseña_api` varchar(255) NOT NULL,
-  `rol_api` enum('Admin','Read-only') NOT NULL,
-  `estado_api` enum('Active','Inactive') NOT NULL,
-  `Created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `Updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -157,11 +141,13 @@ CREATE TABLE `modulo_rol` (
 CREATE TABLE `perfil` (
   `id_perfil` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
   `telefono` varchar(11) NOT NULL,
   `direccion` varchar(60) NOT NULL,
   `correo` varchar(30) NOT NULL,
   `foto` varchar(255) DEFAULT NULL,
-  `usuario_fk` int(11) NOT NULL
+  `usuario_fk` int(11) NOT NULL,
+  `tipo_documento_fk` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -270,6 +256,18 @@ CREATE TABLE `rol` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipo_documento`
+--
+
+CREATE TABLE `tipo_documento` (
+  `id_tipo_documento` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `descripcion` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipo_producto`
 --
 
@@ -310,6 +308,22 @@ CREATE TABLE `usuario` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `usuarios_api`
+--
+
+CREATE TABLE `usuarios_api` (
+  `usuario_api_id` int(11) NOT NULL,
+  `usuario_api` varchar(60) NOT NULL,
+  `contraseña_api` varchar(255) NOT NULL,
+  `rol_api` enum('Admin','Read-only') NOT NULL,
+  `estado_api` enum('Active','Inactive') NOT NULL,
+  `Created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `Updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `zona`
 --
 
@@ -322,13 +336,6 @@ CREATE TABLE `zona` (
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `api_users`
---
-ALTER TABLE `api_users`
-  ADD PRIMARY KEY (`Api_user_id`),
-  ADD UNIQUE KEY `Api_user` (`Api_user`);
 
 --
 -- Indices de la tabla `categoria_menu`
@@ -400,9 +407,10 @@ ALTER TABLE `modulo_rol`
 --
 ALTER TABLE `perfil`
   ADD PRIMARY KEY (`id_perfil`),
-  ADD UNIQUE KEY `telefono` (`telefono`),
+  ADD UNIQUE KEY `direccion` (`direccion`),
   ADD UNIQUE KEY `correo` (`correo`),
-  ADD KEY `usuario_fk` (`usuario_fk`);
+  ADD KEY `usuario_fk` (`usuario_fk`),
+  ADD KEY `tipo_documento_fk` (`tipo_documento_fk`);
 
 --
 -- Indices de la tabla `permisos`
@@ -463,6 +471,13 @@ ALTER TABLE `rol`
   ADD PRIMARY KEY (`id_rol`);
 
 --
+-- Indices de la tabla `tipo_documento`
+--
+ALTER TABLE `tipo_documento`
+  ADD PRIMARY KEY (`id_tipo_documento`),
+  ADD UNIQUE KEY `nombre` (`nombre`);
+
+--
 -- Indices de la tabla `tipo_producto`
 --
 ALTER TABLE `tipo_producto`
@@ -496,12 +511,6 @@ ALTER TABLE `zona`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
-
---
--- AUTO_INCREMENT de la tabla `api_users`
---
-ALTER TABLE `api_users`
-  MODIFY `Api_user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria_menu`
@@ -612,6 +621,12 @@ ALTER TABLE `rol`
   MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `tipo_documento`
+--
+ALTER TABLE `tipo_documento`
+  MODIFY `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `tipo_producto`
 --
 ALTER TABLE `tipo_producto`
@@ -671,7 +686,8 @@ ALTER TABLE `modulo_rol`
 -- Filtros para la tabla `perfil`
 --
 ALTER TABLE `perfil`
-  ADD CONSTRAINT `perfil_ibfk_1` FOREIGN KEY (`usuario_fk`) REFERENCES `usuario` (`id_usuario`);
+  ADD CONSTRAINT `perfil_ibfk_1` FOREIGN KEY (`usuario_fk`) REFERENCES `usuario` (`id_usuario`),
+  ADD CONSTRAINT `perfil_ibfk_2` FOREIGN KEY (`tipo_documento_fk`) REFERENCES `tipo_documento` (`id_tipo_documento`);
 
 --
 -- Filtros para la tabla `permisos_modulo_rol`
