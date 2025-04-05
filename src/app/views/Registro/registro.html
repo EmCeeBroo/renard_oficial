@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/jpeg" href="/src/app/views/Img/logo.jpeg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/app/views/Registro/registro.css">
+  <title>REGISTRO - Sqlite - NodeJs</title>
+</head>
+
+<body>
+  <!--Preload-->
+  <div class="preload" id="preloadId">
+    <div class="text-center">
+      <h1 id="preload-title">Loading...</h1>
+      <div class="spinner-grow text-primary position-absolute top-50 start-50" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <!--End Preload-->
+
+  <div class="register-container">
+    <div class="register-card">
+      <div class="register-header">
+        <img src="/src/app/views/Img/logo.jpeg" class="img img-fluid" alt="Logo">
+      </div>
+      <div class="register-body">
+        <h2 class="register-title">Crear una cuenta</h2>
+        
+        <!--Form-->
+        <form id="register-form">
+          <div class="profile-photo-upload">
+            <img id="profilePhotoPreview" src="/CRUD_PII/app/views/Img/placeholder-profile.jpg" class="profile-photo-preview" alt="Foto de perfil">
+            <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*">
+            <label for="foto_perfil" class="profile-photo-label">Subir foto de perfil</label>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="nombre_perfil" name="nombre_perfil" placeholder="Nombre" required>
+                <label for="nombre_perfil">Nombre</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="apellido_perfil" name="apellido_perfil" placeholder="Apellido" required>
+                <label for="apellido_perfil">Apellido</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                <select class="form-select" id="tipo_documento_fk" name="tipo_documento_fk" required>
+                  <option value="" selected disabled>Seleccione un tipo</option>
+                  <option value="1">Cédula de Ciudadanía</option>
+                  <option value="2">Tarjeta de Identidad</option>
+                  <option value="3">Cédula Extranjera</option>
+                  <option value="4">Pasaporte</option>
+                </select>
+                <label for="tipo_documento_fk">Tipo de Documento</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="documento_perfil" name="documento_perfil" placeholder="Documento" required>
+                <label for="documento_perfil">Número de Documento</label>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="correo_perfil" name="correo_perfil" placeholder="Correo electrónico" required>
+            <label for="correo_perfil">Correo electrónico</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="tel" class="form-control" id="telefono_perfil" name="telefono_perfil" placeholder="Teléfono" required>
+            <label for="telefono_perfil">Teléfono</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="direccion_perfil" name="direccion_perfil" placeholder="Dirección">
+            <label for="direccion_perfil">Dirección</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
+            <label for="password">Contraseña</label>
+          </div>
+          
+          <div class="password-strength">
+            <div class="password-strength-bar" id="passwordStrengthBar"></div>
+          </div>
+          
+          <div class="password-requirements">
+            La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.
+          </div>
+          
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirmar Contraseña" required>
+            <label for="confirmPassword">Confirmar Contraseña</label>
+          </div>
+          
+          <div class="form-check mb-4">
+            <input type="checkbox" class="form-check-input" id="termsCheck" required>
+            <label class="form-check-label" for="termsCheck">Acepto los <a href="#" style="color: var(--primary);">términos y condiciones</a></label>
+          </div>
+          
+          <div class="action-buttons">
+            <a href="/src/app/views/login/login_view.html" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left me-1"></i> Volver al login
+            </a>
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-person-plus me-1"></i> Registrarse
+            </button>
+          </div>
+        </form>
+        <!--End Form-->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <script src="/src/app/views/Registro/registro.js"></script>
+</body>
+
+</html>
