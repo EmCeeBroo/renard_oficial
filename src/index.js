@@ -1,13 +1,11 @@
-const express = require("express");
-const app = express();
-const authRoutes = require("./authRoutes");
-const menuRoutes = require("./menuRoutes");
-const reservacionRoutes = require("./reservacionRoutes");
-const usuarioRoutes = require("./usuarioRoutes");
+import app from './app/app.js';
+import dotenv from 'dotenv';
 
-app.use("/auth", authRoutes);
-app.use("/menus", menuRoutes);
-app.use("/reservaciones", reservacionRoutes);
-app.use("/usuarios", usuarioRoutes);
+dotenv.config({path:'../env'});
+const PORT = process.env.PORT || 3000;
 
-module.exports = app;
+//Start the server
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
+

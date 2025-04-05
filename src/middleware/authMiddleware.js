@@ -5,8 +5,8 @@ dotenv.config();
 
 //Middleware to verify the token
 export const verifyToken = (req, res, next) => {
-    const token = req.header("Authrozation");
-    if (!token) return res.status(401).json({ error: "Acces denied"});
+    const token = req.header("Autorizado");
+    if (!token) return res.status(401).json({ error: "Acceso denegado"});
 
     try{
         const verified = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
@@ -15,6 +15,6 @@ export const verifyToken = (req, res, next) => {
         //console.log(verified);
         next();
     } catch (err){
-        res.status(400).json({ error: "Invalid Token"});
+        res.status(400).json({ error: "Token invalido"});
     }
 };

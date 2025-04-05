@@ -1,12 +1,22 @@
-import app from './app/app.js';
-import dotenv from 'dotenv';
+import express from 'express';
+import authRoutes from '../routes/authRoutes.js';
+import menuRoutes from '../routes/menuRoutes';
+import reservacionRoutes from '../routes/reservacionRoutes';
+import usuarioRoutes from '../routes/usuarioRoutes.js'
 
+const app = express();
 
+app.use(express.json());
 
-dotenv.config({path:'../env'});
-const PORT = process.env.PORT || 3000;
+app.use("/auth", authRoutes);
+app.use("/menus", menuRoutes);
+app.use("/reservaciones", reservacionRoutes);
+app.use("/usuarios", usuarioRoutes);
 
-//Start the server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+app.use((rep, res, nex)=> {
+    res.status(404).json({
+        message: 'Endpoint losses'
+    });
 });
+
+export default app;
