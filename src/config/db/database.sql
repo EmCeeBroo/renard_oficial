@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2025 a las 16:59:58
+-- Tiempo de generación: 05-04-2025 a las 06:09:18
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `api_users` (
   `Api_user_id` int(11) NOT NULL,
   `Api_user` varchar(60) NOT NULL,
-  `Api_password` varchar(255) NOT NULL,
-  `Api_role` enum('Admin','Read-only') NOT NULL,
-  `Api_status` enum('Active','Inactive') NOT NULL,
+  `Api_contraseña` varchar(255) NOT NULL,
+  `Api_role` enum('Admin','Leer-Solamente') NOT NULL,
+  `Api_estatus` enum('Activo','Inactivo') NOT NULL,
   `Created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `Updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
