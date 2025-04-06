@@ -1,7 +1,7 @@
-// src/controllers/authController.js
+//src/controllers/authController.js
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
-import userModel from '../models/userModel.js';
+import modeloUsuario from '../models/modeloUsuario.js';
 import { encryptContraseña, compareContraseña } from '../library/appBcrypt.js';
 import { connect } from '../config/db/connect.js';
 
@@ -32,7 +32,7 @@ export const loginUsuario = async (req, res) => {
   
   try {
     // Buscamos el usuario en la base de datos
-    const userFound = await userModel.findByUsuario(usuario);
+    const userFound = await modeloUsuario.findByUsuario(usuario);
     if (!userFound) {
       return res.status(401).json({ message: 'Usuario no existe.' });
     }

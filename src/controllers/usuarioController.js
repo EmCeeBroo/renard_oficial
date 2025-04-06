@@ -47,7 +47,7 @@ export const updateUsuario = async (req, res) => {
     if (!usuario || !estado || !rol ) {
       return res.status(400).json({ error: "Los campos son obligatorios" });
     }
-    let sqlQuery = "UPDATE usuario SET usuario_usuario=?,usuario_estado_fk=?,rol_fk =?,Updated_at=? WHERE Usuario_id= ?";
+    let sqlQuery = "UPDATE usuario SET usuario_usuario=?,usuario_estado_fk=?,rol_fk =?,updated_at=? WHERE Usuario_id= ?";
     const updated_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
     const [result] = await connect.query(sqlQuery, [usuario, estado, rol,updated_at, req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Usuario no econtrado" });

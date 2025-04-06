@@ -1,6 +1,6 @@
-const db = require('../config/db/connect');
+import { connect } from "../config/db/connect.js";
 
-const userModel = {
+const modeloUsuario = {
   findByUsuario: (usuario) => {
     return new Promise((resolve, reject) => {
       const sql = 'SELECT * FROM usuario WHERE usuario = ?';
@@ -12,4 +12,4 @@ const userModel = {
   },
 };
 
-export default userModel;
+export default modeloUsuario;

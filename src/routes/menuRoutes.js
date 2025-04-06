@@ -1,5 +1,5 @@
 import {Router } from 'express';
-import { showCategoriaMenu, showCategoriaMenuById, addCategoriaMenu, updateCategoriaMenu, deleteCategoriaMenu, } from '../controllers/categoriaMenuController.js';
+import { showCategoriaMenu, showCategoriaMenuId, addCategoriaMenu, updateCategoriaMenu, deleteCategoriaMenu } from '../controllers/categoriaMenuController.js';
 
 const router = Router();
 const apiRenard ='/categoria-menu'
@@ -9,7 +9,7 @@ router.route(apiRenard)
 .post(addCategoriaMenu); // Add profile
 
 router.route(`${apiRenard}/:id`)
-.get(showCategoriaMenuById)  // Get profile by Id
+.get(showCategoriaMenuId)  // Get profile by Id
 .put(updateCategoriaMenu)  // Update profile by Id
 .delete(deleteCategoriaMenu); // Delete profile by Id
 
