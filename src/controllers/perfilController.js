@@ -39,11 +39,11 @@ export const addPerfil = async (req, res) => {
 
 export const updatePerfil = async (req, res) => {
   try {
-    const { nombre, documento, correo, telefono, foto, direccion, tipo_documento } = req.body;
-    if (!nombre || !documento || !correo || !telefono) {
+    const { nombre, apellido, telefono, direccion, correo, foto, usuario, tipo_documento } = req.body;
+    if (!nombre ||!apellido || !telefono || !direccion || !correo || !tipo_documento) {
       return res.status(400).json({ error: "Los campos son obligatorios" });
     }
-    let sqlQuery = "UPDATE perfil SET nombre_perfil=?,documento_perfil=?,correo_perfil=?,telefono_perfil=?,foto_perfil=?,direccion_perfil=?,tipo_documento_fk=?,Updated_at=? WHERE id_perfil = ?";
+    let sqlQuery = "UPDATE perfil SET nombre=?, apellido=?,telefono=?,direccion=?,correo=?,foto=?,usuario_fk =?,tipo_documento_fk=?,Updated_at=? WHERE id_perfil = ?";
     const updated_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
     const [result] = await connect.query(sqlQuery, [nombre, documento, correo, telefono, foto, direccion, tipo_documento, updated_at, req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Perfil no encontrado" });
