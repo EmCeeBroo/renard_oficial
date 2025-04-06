@@ -1,8 +1,8 @@
 {
   "name": "renard_oficial",
   "version": "1.0.0",
-  "type": "module",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "abbrev": "^1.1.1",
     "agent-base": "^6.0.2",
