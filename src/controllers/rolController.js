@@ -12,7 +12,7 @@ export const showRol = async (req, res) => {
 
 export const showRolId = async (req, res) => {
   try {
-    const [result] = await connect.query('SELECT * FROM rol WHERE Rol_id = ?', [req.params.id]);
+    const [result] = await connect.query('SELECT * FROM rol WHERE id_rol = ?', [req.params.id]);
     if (result.length === 0) return res.status(404).json({ error: "Rol no encontrado" });
     res.status(200).json(result[0]);
   } catch (error) {
@@ -43,7 +43,7 @@ export const updateRol = async (req, res) => {
     if (!nombre || !descripcion ) {
       return res.status(400).json({ error: "Los campos son obligatorios" });
     }
-    let sqlQuery = "UPDATE rol SET nombre_rol=?,descripcion_rol=?,Updated_at=? WHERE rol_id= ?";
+    let sqlQuery = "UPDATE rol SET nombre_rol=?,descripcion_rol=?,Updated_at=? WHERE id_rol= ?";
     const updated_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
     const [result] = await connect.query(sqlQuery, [nombre, descripcion,updated_at, req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Role not found" });
@@ -59,7 +59,7 @@ export const updateRol = async (req, res) => {
 
 export const deleteRol = async (req, res) => {
   try {
-    let sqlQuery = "DELETE FROM rol WHERE role_id = ?";
+    let sqlQuery = "DELETE FROM rol WHERE id_role = ?";
     const [result] = await connect.query(sqlQuery, [req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Rol no encontrado" });
     res.status(200).json({

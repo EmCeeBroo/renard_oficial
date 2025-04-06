@@ -1,56 +1,55 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const userModel = require('../models/userModel.js'); // Asegúrate de tener o crear este modelo
-const bcrypt = require('../library/appBcrypt.js'); // Tu librería para encriptación
-const db = require('../config/db/connect'); // Conexión a la base de datos
+// src/controllers/authController.js
+import 'dotenv/config';
+import jwt from 'jsonwebtoken';
+import userModel from '../models/userModel.js';
+import { encryptContraseña, compareContraseña } from '../library/appBcrypt.js';
+import { connect } from '../config/db/connect.js';
 
-exports.register = async (req, res) => {
-  const { usuario, contraseña, rol_id } = req.body;
+export const registerUsuario = async (req, res) => {
+  const { usuario, contraseña, id_rol } = req.body;
 
-  // Validar datos
-  if (!usuario|| !contraseña || !rol_id) {
+  if (!usuario || !contraseña || !id_rol) {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
-  // Encriptar la contraseña
-  bcrypt.hash(contraseña, 10, (err, hash) => {
-    if (err) return res.status(500).json({ error: err });
+  try {
+    // Encriptamos la contraseña usando la función importada
+    const hash = await encryptContraseña(contraseña);
 
-    // Guardar usuario en la base de datos
-    const sql = 'INSERT INTO User (usuario, contraseña, rol_fk, estado_usuario_id) VALUES (?, ?, ?, ?)';
-    db.query(sql, [usuario, hash, rol_id, 1], (err, result) => {
+    // Consulta SQL para insertar el usuario
+    const sql = 'INSERT INTO User (usuario, contraseña, rol_fk, id_estado_usuario) VALUES (?, ?, ?, ?)';
+    db.query(sql, [usuario, hash, id_rol, 1], (err, result) => {
       if (err) return res.status(500).json({ error: err });
       res.status(201).json({ message: 'Usuario registrado con éxito' });
     });
-  });
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
 };
 
-exports.login = async (req, res) => {
+export const loginUsuario = async (req, res) => {
   const { usuario, contraseña } = req.body;
-
+  
   try {
-    // Buscar el usuario por su nombre
-    const usuario = await userModel.findByUsuario(usuario);
-    
-    if (!usuario) {
+    // Buscamos el usuario en la base de datos
+    const userFound = await userModel.findByUsuario(usuario);
+    if (!userFound) {
       return res.status(401).json({ message: 'Usuario no existe.' });
     }
     
-    // Comparar la contraseña proporcionada con la almacenada en base de datos
-    const contraseñaIsValid = await bcrypt.compareContraseña(contraseña, usuario.contraseña);
-
+    // Comparamos la contraseña enviada con la almacenada (hasheada)
+    const contraseñaIsValid = await compareContraseña(contraseña, userFound.contraseña);
     if (!contraseñaIsValid) {
       return res.status(401).json({ message: 'Contraseña incorrecta.' });
     }
     
-    // Generar el token usando JWT
+    // Generamos el token JWT con la información del usuario
     const token = jwt.sign(
-      { id: usuario.id, usuario: usuario.usuario },
+      { id: userFound.id, usuario: userFound.usuario },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Puedes guardar el token en una cookie o devolverlo en la respuesta
     return res.json({ token });
   } catch (error) {
     return res.status(500).json({ message: error.message });

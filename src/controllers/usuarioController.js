@@ -14,7 +14,7 @@ export const showUsuario = async (req, res) => {
 
 export const showUsuarioId = async (req, res) => {
   try {
-    const [result] = await connect.query('SELECT * FROM usuario WHERE Usuario_id = ?', [req.params.id]);
+    const [result] = await connect.query('SELECT * FROM usuario WHERE id_usuario = ?', [req.params.id]);
     if (result.length === 0) return res.status(404).json({ error: "Usuario no encontrado" });
     res.status(200).json(result[0]);
   } catch (error) {
@@ -30,7 +30,7 @@ export const addUsuario = async (req, res) => {
     }
      const hashedContraseña = await encryptContraseña(contraseña);
    
-    let sqlQuery = "INSERT INTO usuario (Usuario_usuario,Usuario_contraseña,Usuario_estado_fk,Role_fk) VALUES (?,?,?,?)";
+    let sqlQuery = "INSERT INTO usuario (usuario_usuario,usuario_contraseña,usuario_estado_fk,rol_fk) VALUES (?,?,?,?)";
     const [result] = await connect.query(sqlQuery, [usuario, hashedContraseña, estado, rol]);
     res.status(201).json({
       data: [{ id: result.insertId, usuario, hashedContraseña, estado, rol }],
@@ -47,7 +47,7 @@ export const updateUsuario = async (req, res) => {
     if (!usuario || !estado || !rol ) {
       return res.status(400).json({ error: "Los campos son obligatorios" });
     }
-    let sqlQuery = "UPDATE usuario SET Usuario_usuario=?,Usuario_estado_fk=?,Rol_fk =?,Updated_at=? WHERE Usuario_id= ?";
+    let sqlQuery = "UPDATE usuario SET usuario_usuario=?,usuario_estado_fk=?,rol_fk =?,Updated_at=? WHERE Usuario_id= ?";
     const updated_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
     const [result] = await connect.query(sqlQuery, [usuario, estado, rol,updated_at, req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Usuario no econtrado" });
@@ -63,7 +63,7 @@ export const updateUsuario = async (req, res) => {
 
 export const deleteUsuario = async (req, res) => {
   try {
-    let sqlQuery = "DELETE FROM usuario WHERE Usuario_id = ?";
+    let sqlQuery = "DELETE FROM usuario WHERE id_usuario = ?";
     const [result] = await connect.query(sqlQuery, [req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Usuario no encontrado" });
     res.status(200).json({

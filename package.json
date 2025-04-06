@@ -2,6 +2,7 @@
   "name": "renard_oficial",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "npx nodemon src/index.js"
@@ -20,9 +21,12 @@
   "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "mysql2": "^3.14.0",
     "nodemon": "^3.1.9"
   }
