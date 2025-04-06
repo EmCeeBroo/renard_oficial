@@ -45,7 +45,7 @@ export const updatePerfil = async (req, res) => {
     }
     let sqlQuery = "UPDATE perfil SET nombre=?, apellido=?,telefono=?,direccion=?,correo=?,foto=?,usuario_fk =?,tipo_documento_fk=?,Updated_at=? WHERE id_perfil = ?";
     const updated_at = new Date().toLocaleString("en-CA", { timeZone: "America/Bogota" }).replace(",", "").replace("/", "-").replace("/", "-");
-    const [result] = await connect.query(sqlQuery, [nombre, documento, correo, telefono, foto, direccion, tipo_documento, updated_at, req.params.id]);
+    const [result] = await connect.query(sqlQuery, [nombre, apellido, telefono, direccion, correo, foto, usuario, tipo_documento, updated_at, req.params.id]);
     if (result.affectedRows === 0) return res.status(404).json({ error: "Perfil no encontrado" });
     res.status(200).json({
       data: [{ nombre, documento, correo, telefono, foto, direccion, tipo_documento,updated_at}],
