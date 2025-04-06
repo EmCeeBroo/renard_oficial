@@ -8,7 +8,7 @@ export const getMenus = async () => {
 };
 
 // Obtener un menú por ID
-export const getMenuById = async (id) => {
+export const getMenuId = async (id) => {
   const sqlQuery = "SELECT * FROM menu WHERE id_menu = ?";
   const [result] = await connect.query(sqlQuery, [id]);
   if (result.length === 0) throw new Error("Menú no encontrado");
