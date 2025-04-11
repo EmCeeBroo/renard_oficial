@@ -10,6 +10,7 @@ export const connect = createPool({
   port:process.env.DB_PORT
 });
 
+// Test the connection
 connect.getConnection()
 .then(() => console.log("Conexión a la base de datos exitosa"))
 .catch((err) => console.error("Error al conectar a la base de datos:", err));
